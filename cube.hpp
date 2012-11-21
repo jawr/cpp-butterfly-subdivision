@@ -13,9 +13,13 @@
 namespace shapes
 {
 
+typedef std::vector<utils::Face> Faces;
+typedef std::tr1::shared_ptr<Faces> FacesPtr; // would prefer to be unique
+
 class Cube
 {
-  std::vector<utils::Face> faces;
+  //std::vector<utils::Face> faces;
+  FacesPtr faces;
   std::tr1::shared_ptr<utils::Face> test;
 public:
   Cube();

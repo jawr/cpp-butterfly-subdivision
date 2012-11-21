@@ -6,11 +6,10 @@
 namespace shapes
 {
 
-Cube::Cube()
+Cube::Cube() : faces(new Faces)
 {
   using namespace utils;
 
- 
   // front face
   {
     VertexPtr v1(new Vertex(10, 10, 10));
@@ -22,13 +21,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 
   // back face
@@ -42,13 +41,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 
   // top face
@@ -62,13 +61,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 
   // bottom face
@@ -82,13 +81,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 
   // left face
@@ -102,13 +101,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 
   // right face
@@ -122,13 +121,13 @@ Cube::Cube()
     f1.AddEdge(new Edge(v1, v2));
     f1.AddEdge(new Edge(v2, v3));
     f1.AddEdge(new Edge(v3, v1));
-    faces.push_back(f1);
+    faces->push_back(f1);
 
     Face f2;
     f2.AddEdge(new Edge(v1, v3));
     f2.AddEdge(new Edge(v3, v4));
     f2.AddEdge(new Edge(v4, v1));
-    faces.push_back(f2);
+    faces->push_back(f2);
   }
 }
 
@@ -136,7 +135,7 @@ void Cube::Draw()
 {
   using namespace utils;
   std::vector<Face>::const_iterator it;
-  for (it = faces.begin(); it != faces.end(); ++it)
+  for (it = faces->begin(); it != faces->end(); ++it)
   {
     std::vector<Edge*>::const_iterator jt;
     for (jt = (*it).CBegin(); jt != (*it).CEnd(); ++jt)
@@ -153,9 +152,11 @@ void Cube::Draw()
 void Cube::Subdivide()
 {
   using namespace utils;  
-  std::vector<Face> newFaces;
-  std::vector<Face>::const_iterator it;
-  for (it = faces.begin(); it != faces.end(); ++it)
+
+  FacesPtr newFaces(new Faces);
+  Faces::const_iterator it;
+
+  for (it = faces->begin(); it != faces->end(); ++it)
   {
     std::vector<Edge*>::const_iterator jt = (*it).CBegin();
     
@@ -175,7 +176,7 @@ void Cube::Subdivide()
       newFace.AddEdge(new Edge(v1, v4));
       newFace.AddEdge(new Edge(v4, v6));
       newFace.AddEdge(new Edge(v6, v1));
-      newFaces.push_back(newFace);
+      newFaces->push_back(newFace);
     }
 
     {
@@ -183,7 +184,7 @@ void Cube::Subdivide()
       newFace.AddEdge(new Edge(v4, v2));
       newFace.AddEdge(new Edge(v2, v5));
       newFace.AddEdge(new Edge(v5, v4));
-      newFaces.push_back(newFace);
+      newFaces->push_back(newFace);
     }
 
     {
@@ -191,7 +192,7 @@ void Cube::Subdivide()
       newFace.AddEdge(new Edge(v5, v3));
       newFace.AddEdge(new Edge(v3, v6));
       newFace.AddEdge(new Edge(v6, v5));
-      newFaces.push_back(newFace);
+      newFaces->push_back(newFace);
     }
 
     // middle face
@@ -200,11 +201,11 @@ void Cube::Subdivide()
       newFace.AddEdge(new Edge(v4, v5));
       newFace.AddEdge(new Edge(v5, v6));
       newFace.AddEdge(new Edge(v6, v4));
-      newFaces.push_back(newFace);
+      newFaces->push_back(newFace);
     }
   } 
-  // switcharoo
-  faces = newFaces; // could use a ref/pointer to be more efficient. c++11!!
+  // switcharoo 
+  faces.swap(newFaces);
 }
 
 }
