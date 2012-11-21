@@ -2,6 +2,7 @@
 #define __UTIL_CLASSES_HPP
 
 #include <iostream>
+#include <vector>
 
 namespace utils
 {
@@ -50,6 +51,9 @@ public:
     --(*p1);
     --(*p2);
   }
+
+  void Draw() const;
+
   const Vertex& P1() const { return *p1; }
   const Vertex& P2() const { return *p2; }
 };

@@ -141,15 +141,7 @@ void Cube::Draw()
     std::vector<Edge*>::const_iterator jt;
     for (jt = (*it).CBegin(); jt != (*it).CEnd(); ++jt)
     {
-      const Vertex& p1 = (*jt)->P1();
-      const Vertex& p2 = (*jt)->P2();
-
-      glBegin(GL_LINES);
-
-      glVertex3f(p1.X(), p1.Y(), p1.Z());
-      glVertex3f(p2.X(), p2.Y(), p2.Z());
-
-      glEnd();
+      (*jt)->Draw();
     }
   }
 }
