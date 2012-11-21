@@ -24,7 +24,6 @@ public:
     Vertex& operator++() 
     { 
       ++valences; 
-      std::cout << "Vertex valence: " << valences << std::endl; 
       return *this;
     }
     Vertex& operator--() 
@@ -42,15 +41,14 @@ public:
     Edge(Vertex* p1, Vertex* p2) : p1(p1), p2(p2) 
     {
         // control vertex's valences, have to use our initalized copies
-        std::cout << "Creating edge" << std::endl;
-        ++p1;
-        ++p2;
+        ++(*p1);
+        ++(*p2);
     }
     ~Edge() 
     {
         // control vertex's valences
-        --p1;
-        --p2;
+        --(*p1);
+        --(*p2);
     }
     const Vertex& P1() const { return *p1; }
     const Vertex& P2() const { return *p2; }
@@ -58,13 +56,16 @@ public:
 
 class Face
 {
-    std::vector<Edge> edges; // todo: change to set
+    std::vector<Edge*> edges; // todo: change to set
 public:
     Face() {}
-    void AddEdge(const Edge& edge) { edges.push_back(edge); }
+    ~Face() {} // need to do real cleanup
+
+    void AddEdge(Edge* edge) { edges.push_back(edge); }
     int Size() const { return edges.size(); }
-    std::vector<Edge>::const_iterator CBegin() const { return edges.begin(); }
-    std::vector<Edge>::const_iterator CEnd() const { return edges.end(); }
+
+    std::vector<Edge*>::const_iterator CBegin() const { return edges.begin(); }
+    std::vector<Edge*>::const_iterator CEnd() const { return edges.end(); }
 };
 
 }
