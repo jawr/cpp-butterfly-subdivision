@@ -51,7 +51,7 @@ void Display()
   // subdivide
   static int i = 0;
   ++i;
-  if (i < 1000 && (i % 200) == 0) cube.Subdivide();
+  if (i < 500 && (i % 100) == 0) cube.Subdivide();
 
   cube.Draw();
 

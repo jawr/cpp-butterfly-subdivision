@@ -13,10 +13,10 @@ Cube::Cube()
  
   // front face
   {
-    Vertex* v1 = new Vertex(10, 10, 10);
-    Vertex* v2 = new Vertex(20, 10, 10);
-    Vertex* v3 = new Vertex(20, 0,  10);
-    Vertex* v4 = new Vertex(10, 0,  10);
+    VertexPtr v1(new Vertex(10, 10, 10));
+    VertexPtr v2(new Vertex(20, 10, 10));
+    VertexPtr v3(new Vertex(20, 0,  10));
+    VertexPtr v4(new Vertex(10, 0,  10));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -33,10 +33,10 @@ Cube::Cube()
 
   // back face
   {
-    Vertex* v1 = new Vertex(10, 10, 0);
-    Vertex* v2 = new Vertex(20, 10, 0);
-    Vertex* v3 = new Vertex(20, 0,  0);
-    Vertex* v4 = new Vertex(10, 0,  0);
+    VertexPtr v1(new Vertex(10, 10, 0));
+    VertexPtr v2(new Vertex(20, 10, 0));
+    VertexPtr v3(new Vertex(20, 0,  0));
+    VertexPtr v4(new Vertex(10, 0,  0));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -53,10 +53,10 @@ Cube::Cube()
 
   // top face
   {
-    Vertex* v1 = new Vertex(10, 10, 10);
-    Vertex* v2 = new Vertex(20, 10, 10);
-    Vertex* v3 = new Vertex(20, 10, 0);
-    Vertex* v4 = new Vertex(10, 10, 0);
+    VertexPtr v1(new Vertex(10, 10, 10));
+    VertexPtr v2(new Vertex(20, 10, 10));
+    VertexPtr v3(new Vertex(20, 10, 0));
+    VertexPtr v4(new Vertex(10, 10, 0));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -73,10 +73,10 @@ Cube::Cube()
 
   // bottom face
   {
-    Vertex* v1 = new Vertex(10, 0, 10);
-    Vertex* v2 = new Vertex(20, 0, 10);
-    Vertex* v3 = new Vertex(20, 0,  0);
-    Vertex* v4 = new Vertex(10, 0,  0);
+    VertexPtr v1(new Vertex(10, 0, 10));
+    VertexPtr v2(new Vertex(20, 0, 10));
+    VertexPtr v3(new Vertex(20, 0,  0));
+    VertexPtr v4(new Vertex(10, 0,  0));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -93,10 +93,10 @@ Cube::Cube()
 
   // left face
   {
-    Vertex* v1 = new Vertex(10, 10, 0);
-    Vertex* v2 = new Vertex(10, 10, 10);
-    Vertex* v3 = new Vertex(10, 0,  10);
-    Vertex* v4 = new Vertex(10, 0,  0);
+    VertexPtr v1(new Vertex(10, 10, 0));
+    VertexPtr v2(new Vertex(10, 10, 10));
+    VertexPtr v3(new Vertex(10, 0,  10));
+    VertexPtr v4(new Vertex(10, 0,  0));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -113,10 +113,10 @@ Cube::Cube()
 
   // right face
   {
-    Vertex* v1 = new Vertex(20, 10, 0);
-    Vertex* v2 = new Vertex(20, 10, 10);
-    Vertex* v3 = new Vertex(20, 0,  10);
-    Vertex* v4 = new Vertex(20, 0,  0);
+    VertexPtr v1(new Vertex(20, 10, 0));
+    VertexPtr v2(new Vertex(20, 10, 10));
+    VertexPtr v3(new Vertex(20, 0,  10));
+    VertexPtr v4(new Vertex(20, 0,  0));
  
     Face f1;
     f1.AddEdge(new Edge(v1, v2));
@@ -152,7 +152,7 @@ void Cube::Draw()
 
 void Cube::Subdivide()
 {
-  using namespace utils;
+  using namespace utils;  
   std::vector<Face> newFaces;
   std::vector<Face>::const_iterator it;
   for (it = faces.begin(); it != faces.end(); ++it)
@@ -160,14 +160,14 @@ void Cube::Subdivide()
     std::vector<Edge*>::const_iterator jt = (*it).CBegin();
     
     // get v1 & v2 of face
-    Vertex* v1 = (*jt)->P1();
-    Vertex* v4 = (*jt)->Midpoint();
+    VertexPtr v1 = (*jt)->P1();
+    VertexPtr v4 = (*jt)->Midpoint();
     ++jt;
-    Vertex* v2 = (*jt)->P1();
-    Vertex* v5 = (*jt)->Midpoint();
+    VertexPtr v2 = (*jt)->P1();
+    VertexPtr v5 = (*jt)->Midpoint();
     ++jt;
-    Vertex* v3 = (*jt)->P1();
-    Vertex* v6 = (*jt)->Midpoint();
+    VertexPtr v3 = (*jt)->P1();
+    VertexPtr v6 = (*jt)->Midpoint();
 
     // let's create our new faces
     {

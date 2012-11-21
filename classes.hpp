@@ -2,10 +2,15 @@
 #define __UTIL_CLASSES_HPP
 
 #include <iostream>
+#include <tr1/memory>
 #include <vector>
 
 namespace utils
 {
+
+class Vertex;
+
+typedef std::tr1::shared_ptr<Vertex> VertexPtr;
 
 class Vertex
 {
@@ -36,10 +41,10 @@ public:
 
 class Edge
 {
-  Vertex* p1; // would want to use a shared_ptr here
-  Vertex* p2;
+  VertexPtr p1; // would want to use a shared_ptr here
+  VertexPtr p2;
 public:
-  Edge(Vertex* p1, Vertex* p2) : p1(p1), p2(p2) 
+  Edge(VertexPtr p1, VertexPtr p2) : p1(p1), p2(p2) 
   {
     // control vertex's valences, have to use our initalized copies
     ++(*p1);
@@ -54,16 +59,17 @@ public:
 
   void Draw() const;
 
-  Vertex* P1() { return p1; }
-  Vertex* P2() { return p2; }
+  VertexPtr P1() { return p1; }
+  VertexPtr P2() { return p2; }
 
-  Vertex* Midpoint();
+  VertexPtr Midpoint();
   
 };
 
 class Face
 {
-  std::vector<Edge*> edges; // todo: change to set
+  // don't think it's possible to store ptr containers in stl
+  std::vector<Edge*> edges;
 public:
   Face() {}
   ~Face() {} // need to do real cleanup
