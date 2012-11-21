@@ -2,7 +2,7 @@
 #define __SHAPES_CUBE_HPP
 
 #include <vector>
-#include <GL/gl.h>
+#include <OpenGL/gl.h>
 #include "classes.hpp"
 
 namespace shapes

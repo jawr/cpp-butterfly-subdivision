@@ -1,14 +1,23 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -g -ggdb
-LIBS := -l GL -lGLU -lSDL
 INCLUDE := -I.
 
-SOURCE := $(shell find . -type f -name "*.cpp" -printf "%P\n")
+# detect os
+UNAME := $(shell uname)
 
-default: butterfly
+ifeq ($(UNAME), Linux)
+LIBS := -lGL -GLU -SDL
+endif
+
+ifeq ($(UNAME), Darwin)
+LIBS := -framework OpenGL -framework GLUT `sdl-config --cflags --libs`
+endif
+
+SOURCE := $(shell find . -type f -name "*.cpp")
+
+default: clean butterfly
 
 butterfly: 
-	$(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) $(SOURCE) $(LIBS) -o butterfly
 
 clean:
