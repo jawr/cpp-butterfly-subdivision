@@ -1,6 +1,8 @@
 #ifndef __UTIL_CLASSES_HPP
 #define __UTIL_CLASSES_HPP
 
+#include <iostream>
+
 namespace utils
 {
 
@@ -18,29 +20,40 @@ public:
     const GLfloat& Z() const { return z; }
 
     // valence control, prefer prefix overload
-    // Vertex& operator++() { ++valences; std::cout << "Vertex valence: " << valences << std::endl; return *this; }
-    // Vertex& operator--() { --valences; return *this; } // needs boundary check?
+    // needs boundary check?
+    Vertex& operator++() 
+    { 
+      ++valences; 
+      std::cout << "Vertex valence: " << valences << std::endl; 
+      return *this;
+    }
+    Vertex& operator--() 
+    { 
+      --valences; 
+      return *this;
+    } 
 };
 
 class Edge
 {
-    Vertex p1;
-    Vertex p2;
+    Vertex* p1; // would want to use a shared_ptr here
+    Vertex* p2;
 public:
-    Edge(const Vertex& p1, const Vertex& p2) : p1(p1), p2(p2) 
+    Edge(Vertex* p1, Vertex* p2) : p1(p1), p2(p2) 
     {
         // control vertex's valences, have to use our initalized copies
-        //++p1;
-        //++p2;
+        std::cout << "Creating edge" << std::endl;
+        ++p1;
+        ++p2;
     }
     ~Edge() 
     {
         // control vertex's valences
-        //--p1;
-        //--p2;
+        --p1;
+        --p2;
     }
-    const Vertex& P1() const { return p1; }
-    const Vertex& P2() const { return p2; }
+    const Vertex& P1() const { return *p1; }
+    const Vertex& P2() const { return *p2; }
 };
 
 class Face
