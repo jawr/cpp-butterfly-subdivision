@@ -6,7 +6,7 @@ INCLUDE := -I.
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-LIBS := -lGL -GLU -SDL
+LIBS := -lGL -lGLU -lSDL
 endif
 
 ifeq ($(UNAME), Darwin)
