@@ -35,7 +35,7 @@ void Display()
 	glLoadIdentity();
 
   // fov
-  static GLfloat fov = -100.0f;
+  static GLfloat fov = -65.0f;
 //  if (fov > -50.0f) fov -= 0.05f;
 //
 	glTranslatef(0.0f, 0.0f, fov);
