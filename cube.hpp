@@ -14,10 +14,9 @@ namespace shapes
 
 class Cube
 {
-    GLfloat size;
     std::vector<utils::Face> faces;
 public:
-    Cube(GLfloat size);
+    Cube();
     void Draw();
 };
 

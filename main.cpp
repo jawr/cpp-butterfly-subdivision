@@ -18,7 +18,7 @@
 
 Uint32 Display(Uint32 interval, void* param)
 {
-    (void)param; // unused
+  (void)param; // unused
 
 	SDL_Event event;
 	event.type = SDL_USEREVENT;
@@ -34,30 +34,28 @@ void Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-    // fov
-    static GLfloat fov = -40.0f;
-//    if (fov > -50.0f) fov -= 0.05f;
+  // fov
+  static GLfloat fov = -100.0f;
+//  if (fov > -50.0f) fov -= 0.05f;
 //
 	glTranslatef(0.0f, 0.0f, fov);
 
 	// rotate
 	static GLfloat angle = 0.0f;
-    angle += 2.0f;
+  angle += 2.0f;
 	glRotatef(angle, 1.0f, 1.0f, 1.0f);
 
-    static shapes::Cube cube(5.0f);
-    cube.Draw();
-
-
+  static shapes::Cube cube;
+  cube.Draw();
 
 	SDL_GL_SwapBuffers();
 }
 
 int main(int argc, char** argv)
 {
-    (void)argc;
-    (void)argv; // unused
-    
+  (void)argc;
+  (void)argv; // unused
+  
 	SDL_Surface* surf;
 	Uint32 width = 640;
 	Uint32 height = 480;
