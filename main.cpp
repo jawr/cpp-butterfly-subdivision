@@ -29,29 +29,37 @@ Uint32 Display(Uint32 interval, void* param)
 	return interval;
 }
 
-void Display()
+void Display(bool toggle)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
   // fov
   static GLfloat fov = -65.0f;
-//  if (fov > -50.0f) fov -= 0.05f;
-//
 	glTranslatef(0.0f, 0.0f, fov);
 
-
-	// rotate
-	static GLfloat angle = 0.0f;
-  angle += 2.0f;
-	glRotatef(angle, 1.0f, 1.0f, 1.0f);
-
   static shapes::Cube cube;
+
+
+  // rotate
+  static GLfloat angle = 0.0f;
+  glRotatef(angle, 1.0f, 1.0f, 1.0f);
 
   // subdivide
   static int i = 0;
   ++i;
-  if (i < 500 && (i % 100) == 0) cube.Subdivide();
+
+  // move or stay
+  static bool run = true;
+
+  if (toggle)
+    run = (run) ? false : true;
+
+  if (run)
+  {
+    angle += 2.0f;
+    if (i < 500 && (i % 100) == 0) cube.Subdivide();
+  }
 
   cube.Draw();
 
@@ -110,8 +118,11 @@ int main(int argc, char** argv)
 				std::cout << "Quiting." << std::endl;
 				return 0;
 				break;
+      case SDL_MOUSEBUTTONDOWN:
+        Display(true);
+        break;
 			case SDL_USEREVENT:
-				Display();
+				Display(false);
 				break;
 		}
 	}
