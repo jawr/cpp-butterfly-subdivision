@@ -40,12 +40,19 @@ void Display()
 //
 	glTranslatef(0.0f, 0.0f, fov);
 
+
 	// rotate
 	static GLfloat angle = 0.0f;
   angle += 2.0f;
 	glRotatef(angle, 1.0f, 1.0f, 1.0f);
 
   static shapes::Cube cube;
+
+  // subdivide
+  static int i = 0;
+  ++i;
+  if (i < 1000 && (i % 200) == 0) cube.Subdivide();
+
   cube.Draw();
 
 	SDL_GL_SwapBuffers();

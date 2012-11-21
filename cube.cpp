@@ -141,9 +141,70 @@ void Cube::Draw()
     std::vector<Edge*>::const_iterator jt;
     for (jt = (*it).CBegin(); jt != (*it).CEnd(); ++jt)
     {
+      // draw edge
       (*jt)->Draw();
     }
   }
+}
+
+// could probably refactor the above and below into one function where we loop
+// over faces/edges and supply a function to do on each.. be more functional
+
+void Cube::Subdivide()
+{
+  using namespace utils;
+  std::vector<Face> newFaces;
+  std::vector<Face>::const_iterator it;
+  for (it = faces.begin(); it != faces.end(); ++it)
+  {
+    std::vector<Edge*>::const_iterator jt = (*it).CBegin();
+    
+    // get v1 & v2 of face
+    Vertex* v1 = (*jt)->P1();
+    Vertex* v4 = (*jt)->Midpoint();
+    ++jt;
+    Vertex* v2 = (*jt)->P1();
+    Vertex* v5 = (*jt)->Midpoint();
+    ++jt;
+    Vertex* v3 = (*jt)->P1();
+    Vertex* v6 = (*jt)->Midpoint();
+
+    // let's create our new faces
+    {
+      utils::Face newFace;
+      newFace.AddEdge(new Edge(v1, v4));
+      newFace.AddEdge(new Edge(v4, v6));
+      newFace.AddEdge(new Edge(v6, v1));
+      newFaces.push_back(newFace);
+    }
+
+    {
+      utils::Face newFace;
+      newFace.AddEdge(new Edge(v4, v2));
+      newFace.AddEdge(new Edge(v2, v5));
+      newFace.AddEdge(new Edge(v5, v4));
+      newFaces.push_back(newFace);
+    }
+
+    {
+      utils::Face newFace;
+      newFace.AddEdge(new Edge(v5, v3));
+      newFace.AddEdge(new Edge(v3, v6));
+      newFace.AddEdge(new Edge(v6, v5));
+      newFaces.push_back(newFace);
+    }
+
+    // middle face
+    {
+      utils::Face newFace;
+      newFace.AddEdge(new Edge(v4, v5));
+      newFace.AddEdge(new Edge(v5, v6));
+      newFace.AddEdge(new Edge(v6, v4));
+      newFaces.push_back(newFace);
+    }
+  } 
+  // switcharoo
+  faces = newFaces; // could use a ref/pointer to be more efficient. c++11!!
 }
 
 }

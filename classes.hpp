@@ -54,8 +54,11 @@ public:
 
   void Draw() const;
 
-  const Vertex& P1() const { return *p1; }
-  const Vertex& P2() const { return *p2; }
+  Vertex* P1() { return p1; }
+  Vertex* P2() { return p2; }
+
+  Vertex* Midpoint();
+  
 };
 
 class Face
