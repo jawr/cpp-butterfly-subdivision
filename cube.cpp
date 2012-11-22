@@ -136,8 +136,11 @@ void Cube::ButterflySubdivide()
     EdgePtr b = it->B();
     EdgePtr c = it->C();
 
+<<<<<<< Updated upstream
     Face& adj = GetAdjacentFace(e);
 
+=======
+>>>>>>> Stashed changes
     newFaces->push_back(BuildFace(*it, a));
     newFaces->push_back(BuildFace(*it, b));
     newFaces->push_back(BuildFace(*it, c));
@@ -149,6 +152,10 @@ void Cube::ButterflySubdivide()
 utils::Face& Cube::BuildFace(utils::Face& face, utils::EdgePtr& edge)
 {
   using namespace utils;
+<<<<<<< Updated upstream
+=======
+  Face& adj = GetAdjacentFace(e);
+>>>>>>> Stashed changes
 
   VertexPtr a1 = b->P1();
   VertexPtr a2 = a->P2();

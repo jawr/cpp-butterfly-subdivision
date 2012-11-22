@@ -59,7 +59,12 @@ void Display(bool toggle)
   {
     angle += 2.0f;
     if (i < 500 && (i % 100) == 0) 
+<<<<<<< Updated upstream
       cube.ButterflySubdivide();
+=======
+      //cube.ButterflySubdivide();
+      cube.Subdivide();
+>>>>>>> Stashed changes
   }
 
   cube.Draw();
