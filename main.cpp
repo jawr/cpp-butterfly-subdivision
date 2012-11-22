@@ -58,7 +58,8 @@ void Display(bool toggle)
   if (run)
   {
     angle += 2.0f;
-    if (i < 500 && (i % 100) == 0) cube.Subdivide();
+    if (i < 500 && (i % 100) == 0) 
+      cube.ButterflySubdivide();
   }
 
   cube.Draw();

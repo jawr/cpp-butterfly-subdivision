@@ -66,19 +66,35 @@ public:
   
 };
 
+typedef std::tr1::shared_ptr<Edge> EdgePtr;
+
 class Face
 {
-  // don't think it's possible to store ptr containers in stl
-  std::vector<Edge*> edges;
+  /* simplifying a face to three edges
+     using the following syntax:
+     
+          /\
+        c/  \a
+        /____\
+          b
+  */
+  EdgePtr a; 
+  EdgePtr b; 
+  EdgePtr c; 
 public:
   Face() {}
+  Face (const EdgePtr& a, const EdgePtr& b, const EdgePtr& c) :
+    a(a), b(b), c(c) {}
+  Face (const VertexPtr& v1, const VertexPtr& v2, const VertexPtr& v3);
   ~Face() {} // need to do real cleanup
 
-  void AddEdge(Edge* edge) { edges.push_back(edge); }
-  int Size() const { return edges.size(); }
+  void A(Edge* a) { this->a.reset(a); }
+  void B(Edge* b) { this->b.reset(b); }
+  void C(Edge* c) { this->c.reset(c); }
 
-  std::vector<Edge*>::const_iterator CBegin() const { return edges.begin(); }
-  std::vector<Edge*>::const_iterator CEnd() const { return edges.end(); }
+  EdgePtr& A() { return a; }
+  EdgePtr& B() { return b; }
+  EdgePtr& C() { return c; }
 };
 
 }

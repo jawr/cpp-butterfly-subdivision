@@ -25,6 +25,9 @@ public:
   Cube();
   void Draw();
   void Subdivide();
+  void ButterflySubdivide();
+  utils::Face& GetAdjacentFace(utils::EdgePtr& e);
+  utils::Face& BuildFace(utils::Face& face, utils::EdgePtr& edge);
 };
 
 }
