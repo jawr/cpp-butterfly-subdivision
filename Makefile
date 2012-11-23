@@ -1,5 +1,5 @@
-CXX := g++
-CXXFLAGS := -Wall -Wextra -pedantic -g -ggdb
+CXX := clang++
+CXXFLAGS := -std=c++11 -Wall -Wextra -pedantic -g -ggdb
 INCLUDE := -I.
 
 # detect os

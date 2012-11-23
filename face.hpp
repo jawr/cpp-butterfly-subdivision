@@ -24,9 +24,17 @@ public:
   bool operator<(const Face& f) const
   {
     if (e1 < f.E1()) return true;
+    else if (e1 > f.E1()) return false;
     else if (e2 < f.E2()) return true;
+    else if (e2 > f.E2()) return false;
     else if (e3 < f.E3()) return true;
+    else if (e3 > f.E3()) return false;
     return false;
+  }
+
+  bool operator>(const Face& f) const
+  {
+    return (f < *this);
   }
 
   bool operator==(const Face& f) const
