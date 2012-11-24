@@ -36,9 +36,10 @@ class WingedEdge
   FaceList faceList;
   EdgeListMap edgeListMap;
   VertexList vertexList;
+  bool butterfly;
 
 public:
-  WingedEdge() {}
+  WingedEdge() : butterfly(false) {}
 
   Vertex AddVertex(GLfloat x, GLfloat y, GLfloat z);
   Edge AddEdge(Vertex& v1, Vertex& v2);
@@ -50,6 +51,8 @@ public:
 
   void Draw();
   
+  void SetButterflySubdivide() { butterfly = true; }
+  WingedEdge ButterflySubdivide();
   WingedEdge Subdivide();
   Vertex SubdivideEdge(const Face& f1, Edge& e, Vertex& b1);
 

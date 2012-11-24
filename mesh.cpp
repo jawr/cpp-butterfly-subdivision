@@ -38,19 +38,9 @@ Face WingedEdge::AddFace(Edge& e1, Edge& e2, Edge& e3)
   faceList[f].insert(e2);
   faceList[f].insert(e3);
 
-  std::cout << "Adding faces" << std::endl;
-  std::cout << edgeListMap[e1].faces.size() << std::endl;
-  std::cout << edgeListMap[e2].faces.size() << std::endl;
-  std::cout << edgeListMap[e3].faces.size() << std::endl;
-
   edgeListMap[e1].faces.insert(f);
   edgeListMap[e2].faces.insert(f);
   edgeListMap[e3].faces.insert(f);
-
-  std::cout << "Added faces" << std::endl;
-  std::cout << edgeListMap[e1].faces.size() << std::endl;
-  std::cout << edgeListMap[e2].faces.size() << std::endl;
-  std::cout << edgeListMap[e3].faces.size() << std::endl;
 
   edgeListMap[e1].vertices.insert(e1.V1());
   edgeListMap[e1].vertices.insert(e1.V2());
@@ -66,6 +56,12 @@ void WingedEdge::Draw()
 {
   for (auto& edge: edgeListMap)
     edge.first.Draw();
+}
+
+WingedEdge WingedEdge::ButterflySubdivide()
+{
+  butterfly = true;
+  return Subdivide();
 }
 
 WingedEdge WingedEdge::Subdivide()
@@ -135,7 +131,7 @@ WingedEdge WingedEdge::Subdivide()
   std::cout << "VertexList: " << mesh.NumVertices() << std::endl;
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
   std::cout << "FaceList: " << mesh.NumFaces() << std::endl;
-  
+
   return mesh;
 }
 
@@ -143,6 +139,8 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
 {
   /* divide by 2 (a) */
   Vertex v = e.Midpoint();
+
+  //if (!butterfly) return v;
 
   try
   {  
@@ -156,20 +154,13 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
     else if (f2.E3() != e)
       b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
 
-    std::cout << "a1: " << e.V1() << std::endl;
-    std::cout << "a2: " << e.V2() << std::endl;
-    std::cout << "b1: " << b1 << std::endl;
-    std::cout << "b2: " << b2 << std::endl;
-
-    b1 = b1 / 8.0;
-    b1 = b1 + 2.0;
-
-    b2 = b2 / 8.0;
-    b2 = b2 + 2.0;
-
     Edge bEdge(b1, b2);
+    Vertex b = bEdge.Midpoint();
+    
 
-    return bEdge.Midpoint();
+    //v.Y((b.Y()/8.0)+2*2.0);
+    v.Y(b.Y());
+
   }
   catch (const RuntimeError& e)
   {

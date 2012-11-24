@@ -47,7 +47,6 @@ void Display(bool toggle)
 
   // subdivide
   static int i = 0;
-  ++i;
 
   // move or stay
   static bool run = true;
@@ -58,8 +57,9 @@ void Display(bool toggle)
   if (run)
   {
     angle += 2.0f;
-    if (i < 500 && (i % 100) == 0) 
-      cube.Subdivide();
+    if (i++ < 500 && (i % 100) == 0) 
+    //if (i++ == 50)
+      cube.ButterflySubdivide();
   }
 
   cube.Draw();
@@ -73,8 +73,8 @@ int main(int argc, char** argv)
   (void)argv; // unused
   
 	SDL_Surface* surf;
-	Uint32 width = 640;
-	Uint32 height = 480;
+	Uint32 width = 720;
+	Uint32 height = 680;
 	Uint32 colourDepth = 16;
 	Uint32 delay = 1000/30;
 	

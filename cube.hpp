@@ -15,6 +15,7 @@ public:
 
   void Draw();
   void Subdivide();
+  void ButterflySubdivide() { mesh = mesh.ButterflySubdivide(); }
 };
 
 /* end */

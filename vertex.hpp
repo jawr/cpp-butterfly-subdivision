@@ -20,6 +20,10 @@ public:
   Vertex() {}
   Vertex(GLfloat x, GLfloat y, GLfloat z) : x(x), y(y), z(z) {}
 
+  void X(GLfloat x) { this->x = x; }
+  void Y(GLfloat y) { this->y = y; }
+  void Z(GLfloat z) { this->y = z; }
+
   GLfloat X() const { return x; }
   GLfloat Y() const { return y; }
   GLfloat Z() const { return z; }

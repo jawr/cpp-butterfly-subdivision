@@ -46,11 +46,11 @@ Cube::Cube()
   mesh.AddFace(e3, e4, e5);
   }
 
+  return;
+
   std::cout << "VertexList: " << mesh.NumVertices() << std::endl;
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
   std::cout << "FaceList: " << mesh.NumFaces() << std::endl;
-
-  return;
 
   {
   /* back face */
@@ -135,6 +135,8 @@ Cube::Cube()
   std::cout << "VertexList: " << mesh.NumVertices() << std::endl;
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
   std::cout << "FaceList: " << mesh.NumFaces() << std::endl;
+
+  Subdivide();
   
 }
 
