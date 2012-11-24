@@ -82,8 +82,10 @@ WingedEdge WingedEdge::Subdivide()
     }
 
     /* might need to verify this doesn't pick duplicates */
-    Vertex v1 = e1.Smallest();
-    Vertex v2 = e1.Largest();
+    //Vertex v1 = e1.Smallest();
+    //Vertex v2 = e1.Largest();
+    Vertex v1 = e1.V1();
+    Vertex v2 = e1.V2();
     Vertex v3 = (e2.V1() == v1 || e2.V1() == v2) ? e2.V2() : e2.V1();
 
     /* guarantee we know what e2 is */
@@ -140,7 +142,7 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
   /* divide by 2 (a) */
   Vertex v = e.Midpoint();
 
-  //if (!butterfly) return v;
+  if (!butterfly) return v;
 
   try
   {  
@@ -154,13 +156,11 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
     else if (f2.E3() != e)
       b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
 
-    Edge bEdge(b1, b2);
+    Edge bEdge((b1/8)*2.0, (b2/8)*2.0);
     Vertex b = bEdge.Midpoint();
     
 
-    //v.Y((b.Y()/8.0)+2*2.0);
-    v.Y(b.Y());
-
+    v.Y(v.Y()-b.Y());
   }
   catch (const RuntimeError& e)
   {

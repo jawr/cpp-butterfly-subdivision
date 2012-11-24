@@ -21,7 +21,7 @@ Cube::Cube()
   Edge e4 = mesh.AddEdge(v3, v4);
   Edge e5 = mesh.AddEdge(v4, v1);
 
-  mesh.AddFace(e1, e2, e3);
+  mesh.AddFace(e2, e3, e1);
   mesh.AddFace(e3, e4, e5);
   }
 
@@ -45,8 +45,6 @@ Cube::Cube()
   mesh.AddFace(e1, e2, e3);
   mesh.AddFace(e3, e4, e5);
   }
-
-  return;
 
   std::cout << "VertexList: " << mesh.NumVertices() << std::endl;
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
