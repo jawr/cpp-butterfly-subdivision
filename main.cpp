@@ -7,10 +7,6 @@
 #endif
 #include <SDL/SDL.h>
 #include <iostream>
-#include <vector>
-#include <set>
-
-#include "classes.hpp"
 #include "cube.hpp"
 
 #define RUN_GRAPHICS_DISPLAY 0x00;

@@ -139,7 +139,7 @@ WingedEdge WingedEdge::Subdivide()
 
 Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
 {
-  /* divide by 2 (a) */
+  /* get our a midpoint */
   Vertex v = e.Midpoint();
 
   if (!butterfly) return v;
@@ -148,6 +148,7 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
   {  
     const Face& f2 = GetAdjacentFace(f1, e); 
 
+    /* get our opposing face's b point */
     Vertex b2;
     if (f2.E1() != e)
       b2 = (f2.E1().V1() == e.V1()) ? f2.E1().V2() : f2.E1().V1();
@@ -156,9 +157,9 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
     else if (f2.E3() != e)
       b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
 
-    Edge bEdge((b1/8)*2.0, (b2/8)*2.0);
+    /* get our b idpoint (adding weighting) */
+    Edge bEdge((b1/8)+2.0, (b2/8)+2.0);
     Vertex b = bEdge.Midpoint();
-    
 
     v.Y(v.Y()-b.Y());
   }
