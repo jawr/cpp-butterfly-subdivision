@@ -157,11 +157,14 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
     else if (f2.E3() != e)
       b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
 
-    /* get our b idpoint (adding weighting) */
+    /* get our b midpoint (adding weighting) */
     Edge bEdge((b1/8)+2.0, (b2/8)+2.0);
     Vertex b = bEdge.Midpoint();
 
-    v.Y(v.Y()-b.Y());
+    /* i think this only effects the front face.. doesn't seem right, but
+       offers least weird results, v = v - b offers very odd results */
+    //v = v - b;
+    v.Y(v.Y()-b.Y()); 
   }
   catch (const RuntimeError& e)
   {
