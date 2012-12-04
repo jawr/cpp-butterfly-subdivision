@@ -73,6 +73,9 @@ WingedEdge WingedEdge::ButterflySubdivide()
 WingedEdge WingedEdge::Subdivide()
 {
   WingedEdge mesh;
+  /* perhaps we need to loop over the edge list rather than the face list as 
+     we are creating two new edges from an old edge leaving gaps between them.
+  */
   for (auto& face: faceList)
   {
     /* massive assumption that there is 3 edges in our face */
