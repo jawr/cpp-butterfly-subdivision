@@ -1,6 +1,7 @@
 #ifndef __GFX_FACE_HPP
 #define __GFX_FACE_HPP
 
+#include <set>
 #include "edge.hpp"
 
 namespace gfx
@@ -14,7 +15,18 @@ class Face
   Edge e3;
 
 public:
-  Face(const Edge& e1, const Edge& e2, const Edge& e3) : e1(e1), e2(e2), e3(e3) {}
+  Face(const Edge& e1, const Edge& e2, const Edge& e3)
+  {
+    /* guarantee order for comparison */
+    std::set<Edge> edges;
+    edges.insert(e1);    
+    edges.insert(e2);    
+    edges.insert(e3);    
+    auto it = edges.begin();
+    this->e1 = *it;
+    this->e2 = *++it++;
+    this->e3 = *++it;
+  }
   
   const Edge& E1() const { return e1; }
   const Edge& E2() const { return e2; }
@@ -39,12 +51,20 @@ public:
 
   bool operator==(const Face& f) const
   {
-    return (e1 == f.E1() && e2 == f.E2() && e3 == f.E3());
+    return (!(f < *this) && !(*this < f));
   }
 
   bool operator!=(const Face& f) const
   { 
     return !(*this == f);
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const Face& f)
+  {
+    os << f.E1() << std::endl;
+    os << f.E2() << std::endl;
+    os << f.E3();
+    return os;
   }
 };
 

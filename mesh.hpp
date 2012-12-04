@@ -42,8 +42,8 @@ public:
   WingedEdge() : butterfly(false) {}
 
   Vertex AddVertex(GLfloat x, GLfloat y, GLfloat z);
-  Edge AddEdge(Vertex& v1, Vertex& v2);
-  Face AddFace(Edge& e1, Edge& e2, Edge& e3); 
+  Edge AddEdge(const Vertex& v1, const Vertex& v2);
+  Face AddFace(const Edge& e1, const Edge& e2, const Edge& e3); 
 
   int NumVertices() const { return vertexList.size(); }
   int NumEdges() const { return edgeListMap.size(); }
@@ -56,7 +56,7 @@ public:
   WingedEdge Subdivide();
   Vertex SubdivideEdge(const Face& f1, Edge& e, Vertex& b1);
 
-  const Face& GetAdjacentFace(const Face& f, Edge& e);
+  Face GetAdjacentFace(const Face& f, Edge& e);
 };
 
 /* end */

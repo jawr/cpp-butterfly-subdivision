@@ -17,7 +17,20 @@ class Edge
 
 public:
   Edge() {}
-  Edge(const Vertex& v1, const Vertex& v2) : v1(v1), v2(v2) {}
+  Edge(const Vertex& v1, const Vertex& v2)
+  {
+    /* guarantee some order */
+    if (v1 < v2) 
+    {
+      this->v1 = v1;
+      this->v2 = v2;
+    }
+    else 
+    {
+      this->v1 = v2;
+      this->v2 = v1;
+    }
+  }
 
   const Vertex& V1() const { return v1; }
   const Vertex& V2() const { return v2; }

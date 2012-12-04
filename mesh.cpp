@@ -13,7 +13,7 @@ Vertex WingedEdge::AddVertex(GLfloat x, GLfloat y, GLfloat z)
   return v;
 }
 
-Edge WingedEdge::AddEdge(Vertex& v1, Vertex& v2)
+Edge WingedEdge::AddEdge(const Vertex& v1, const Vertex& v2)
 {
   Edge e(v1, v2);
 
@@ -30,10 +30,16 @@ Edge WingedEdge::AddEdge(Vertex& v1, Vertex& v2)
   return e;
 }
 
-Face WingedEdge::AddFace(Edge& e1, Edge& e2, Edge& e3)
+Face WingedEdge::AddFace(const Edge& e1, const Edge& e2, const Edge& e3)
 {
   Face f(e1, e2, e3);
 
+  /* ensure below */
+  AddEdge(e1.V1(), e1.V2());
+  AddEdge(e2.V1(), e2.V2());
+  AddEdge(e3.V1(), e3.V2());
+  
+  /* edit face lists */
   faceList[f].insert(e1);
   faceList[f].insert(e2);
   faceList[f].insert(e3);
@@ -70,20 +76,11 @@ WingedEdge WingedEdge::Subdivide()
   for (auto& face: faceList)
   {
     /* massive assumption that there is 3 edges in our face */
-    Edge e1;
-    Edge e2;
-    Edge e3;
-    {
-      std::cout << face.second.size() << std::endl;
-      auto it = face.second.begin();
-      e1 = *it++;
-      e2 = *it++;
-      e3 = *it;
-    }
+    Edge e1 = face.first.E1();
+    Edge e2 = face.first.E2();
+    Edge e3 = face.first.E3();
 
     /* might need to verify this doesn't pick duplicates */
-    //Vertex v1 = e1.Smallest();
-    //Vertex v2 = e1.Largest();
     Vertex v1 = e1.V1();
     Vertex v2 = e1.V2();
     Vertex v3 = (e2.V1() == v1 || e2.V1() == v2) ? e2.V2() : e2.V1();
@@ -144,43 +141,52 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
 
   if (!butterfly) return v;
 
-  try
-  {  
-    const Face& f2 = GetAdjacentFace(f1, e); 
+  Face f2 = GetAdjacentFace(f1, e); 
 
-    /* get our opposing face's b point */
-    Vertex b2;
-    if (f2.E1() != e)
-      b2 = (f2.E1().V1() == e.V1()) ? f2.E1().V2() : f2.E1().V1();
-    else if (f2.E2() != e)
-      b2 = (f2.E2().V1() == e.V1()) ? f2.E2().V2() : f2.E2().V1();
-    else if (f2.E3() != e)
-      b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
+  /* get our opposing face's b point */
+  Vertex b2;
+  if (f2.E1() != e)
+    b2 = (f2.E1().V1() == e.V1()) ? f2.E1().V2() : f2.E1().V1();
+  else if (f2.E2() != e)
+    b2 = (f2.E2().V1() == e.V1()) ? f2.E2().V2() : f2.E2().V1();
+  else if (f2.E3() != e)
+    b2 = (f2.E3().V1() == e.V1()) ? f2.E3().V2() : f2.E3().V1();
 
-    /* get our b midpoint (adding weighting) */
-    Edge bEdge((b1/8)+2.0, (b2/8)+2.0);
-    Vertex b = bEdge.Midpoint();
+  Edge e1 = f2.E1();
+  Edge e2 = f2.E2();
+  Edge e3 = f2.E3();
+  
 
-    /* i think this only effects the front face.. doesn't seem right, but
-       offers least weird results, v = v - b offers very odd results */
-    //v = v - b;
-    v.Y(v.Y()-b.Y()); 
-  }
-  catch (const RuntimeError& e)
-  {
-    std::cout << "Couldn't fit b to template." << std::endl;
-  }
+  std::cout << "e : " << std::endl << e << std::endl;
+  std::cout << "e1: " << std::endl << e1 << std::endl;
+  std::cout << "e2: " << std::endl << e2 << std::endl;
+  std::cout << "e3: " << std::endl << e3 << std::endl;
+
+
+  std::cout << "a1: " << std::endl << e.V1() << std::endl;
+  std::cout << "a2: " << std::endl << e.V2() << std::endl;
+  std::cout << "a: " << std::endl << v << std::endl;
+  
+
+  std::cout << "b1: " << std::endl << b1 << std::endl;
+  std::cout << "b2: " << std::endl << b2 << std::endl;
+
+  /* get our b midpoint (adding weighting) */
+  v = v + (b1*(1/8));
+  v = v + (b2*(1/8));
+
+  std::cout << "b: " << std::endl << v << std::endl;
   
   return v;
 }
 
-const Face& WingedEdge::GetAdjacentFace(const Face& f, Edge& e)
+Face WingedEdge::GetAdjacentFace(const Face& f, Edge& e)
 {
   EdgeList edgeList = edgeListMap[e];
   std::set<Face>::const_iterator it;
-  std::cout << "edge faces: " << edgeList.faces.size() << std::endl;
   for (it = edgeList.faces.begin(); it != edgeList.faces.end(); ++it)
-    if (*it != f) return *it;
+    if (*it != f)
+      return *it;
   std::cout << "Didn't find a face." << std::endl;
   throw RuntimeError("Error getting adjacent face.");
 }
