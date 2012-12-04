@@ -70,12 +70,12 @@ public:
 
   friend Vertex operator+(const Vertex& v1, const Vertex& v2)
   {
-    return Vertex(v1.X()+v2.X(), v1.Y()+v2.Y(), v1.Z()+v1.Z()); 
+    return Vertex(v1.X()+v2.X(), v1.Y()+v2.Y(), v1.Z()+v2.Z()); 
   }
 
   friend Vertex operator-(const Vertex& v1, const Vertex& v2)
   {
-    return Vertex(v1.X()-v2.X(), v1.Y()-v2.Y(), v1.Z()-v1.Z()); 
+    return Vertex(v1.X()-v2.X(), v1.Y()-v2.Y(), v1.Z()-v2.Z()); 
   }
 
   friend std::ostream& operator<<(std::ostream& os, const Vertex& v)

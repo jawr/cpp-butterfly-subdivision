@@ -141,6 +141,8 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
 
   if (!butterfly) return v;
 
+  try
+  {
   Face f2 = GetAdjacentFace(f1, e); 
 
   /* get our opposing face's b point */
@@ -172,10 +174,15 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex& b1)
   std::cout << "b2: " << std::endl << b2 << std::endl;
 
   /* get our b midpoint (adding weighting) */
-  v = v + (b1*(1/8));
-  v = v + (b2*(1/8));
+  Vertex b = b1 - b2;
+  b = b/8.0;
 
-  std::cout << "b: " << std::endl << v << std::endl;
+  std::cout << "b: " << std::endl << b << std::endl;
+
+  v = v + b;
+  } catch (const RuntimeError& e)
+  {
+  }
   
   return v;
 }

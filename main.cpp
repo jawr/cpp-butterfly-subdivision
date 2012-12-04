@@ -42,7 +42,7 @@ void Display(bool toggle)
   glRotatef(angle, 1.0f, 1.0f, 1.0f);
 
   // subdivide
-  static int i = 0;
+  static int i = 900;
 
   // move or stay
   static bool run = true;
@@ -53,7 +53,7 @@ void Display(bool toggle)
   if (run)
   {
     angle += 2.0f;
-    if (i++ < 500 && (i % 100) == 0) 
+    if (i++ < 5000 && (i % 1000) == 0) 
     //if (i++ == 50)
       cube.ButterflySubdivide();
   }
