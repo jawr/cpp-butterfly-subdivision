@@ -24,7 +24,7 @@ public:
     edges.insert(e3);    
     auto it = edges.begin();
     this->e1 = *it;
-    this->e2 = *++it++;
+    this->e2 = *++it;
     this->e3 = *++it;
   }
   

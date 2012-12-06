@@ -95,7 +95,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Edge& v)
   {
-    os << v.V1() << " :: " << v.V2();
+    os << v.V1() << std::endl << v.V2();
     return os;
   }
   

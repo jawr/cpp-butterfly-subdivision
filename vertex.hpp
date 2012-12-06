@@ -68,6 +68,11 @@ public:
     return Vertex(v.X()+f, v.Y()+f, v.Z()+f);
   }
 
+  friend Vertex operator-(const Vertex& v, GLfloat f)
+  {
+    return Vertex(v.X()-f, v.Y()-f, v.Z()-f);
+  }
+
   friend Vertex operator+(const Vertex& v1, const Vertex& v2)
   {
     return Vertex(v1.X()+v2.X(), v1.Y()+v2.Y(), v1.Z()+v2.Z()); 
@@ -80,7 +85,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Vertex& v)
   {
-    os << "X: " << v.X() << " Y: " << v.Y() << " Z: " << v.Z();
+    os << "v " << v.X() << " " << v.Y() << " " << v.Z();
     return os;
   }
 };

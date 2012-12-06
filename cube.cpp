@@ -10,10 +10,10 @@ Cube::Cube()
   using namespace gfx;
   { 
   /* front face */
-  Vertex v1 = mesh.AddVertex(10, 10, 10);
-  Vertex v2 = mesh.AddVertex(20, 10, 10);
-  Vertex v3 = mesh.AddVertex(20,  0, 10);
-  Vertex v4 = mesh.AddVertex(10,  0, 10);
+  Vertex v1 = mesh.AddVertex(0.0, 0.0, 0.0);
+  Vertex v2 = mesh.AddVertex(1.0, 0.0, 0.0);
+  Vertex v3 = mesh.AddVertex(1.0, -1.0, 0.0);
+  Vertex v4 = mesh.AddVertex(0.0, -1.0, 0.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -31,10 +31,10 @@ Cube::Cube()
 
   {
   /* top face */
-  Vertex v1 = mesh.AddVertex(10, 10, 10);
-  Vertex v2 = mesh.AddVertex(20, 10, 10);
-  Vertex v3 = mesh.AddVertex(20, 10, 0);
-  Vertex v4 = mesh.AddVertex(10, 10, 0);
+  Vertex v1 = mesh.AddVertex(0.0, 0.0, 0.0);
+  Vertex v2 = mesh.AddVertex(1.0, 0.0, 0.0);
+  Vertex v3 = mesh.AddVertex(1.0, 0.0, -1.0);
+  Vertex v4 = mesh.AddVertex(0.0, 0.0, -1.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -52,10 +52,10 @@ Cube::Cube()
 
   {
   /* back face */
-  Vertex v1 = mesh.AddVertex(10, 10, 0);
-  Vertex v2 = mesh.AddVertex(20, 10, 0);
-  Vertex v3 = mesh.AddVertex(20, 0,  0);
-  Vertex v4 = mesh.AddVertex(10, 0,  0);
+  Vertex v1 = mesh.AddVertex(0.0, 0.0, -1.0);
+  Vertex v2 = mesh.AddVertex(1.0, 0.0, -1.0);
+  Vertex v3 = mesh.AddVertex(1.0, -1.0, -1.0);
+  Vertex v4 = mesh.AddVertex(0.0, -1.0, -1.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -73,10 +73,10 @@ Cube::Cube()
 
   /* bottom face */
   {
-  Vertex v1 = mesh.AddVertex(10, 0, 10);
-  Vertex v2 = mesh.AddVertex(20, 0, 10);
-  Vertex v3 = mesh.AddVertex(20, 0,  0);
-  Vertex v4 = mesh.AddVertex(10, 0,  0);
+  Vertex v1 = mesh.AddVertex(0.0, -1.0, 0.0);
+  Vertex v2 = mesh.AddVertex(1.0, -1.0, 0.0);
+  Vertex v3 = mesh.AddVertex(1.0, -1.0, -1.0);
+  Vertex v4 = mesh.AddVertex(0.0, -1.0, -1.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -94,10 +94,10 @@ Cube::Cube()
 
   /* left face */
   {
-  Vertex v1 = mesh.AddVertex(10, 10, 0);
-  Vertex v2 = mesh.AddVertex(10, 10, 10);
-  Vertex v3 = mesh.AddVertex(10, 0,  10);
-  Vertex v4 = mesh.AddVertex(10, 0,  0);
+  Vertex v1 = mesh.AddVertex(0.0, 0.0, -1.0);
+  Vertex v2 = mesh.AddVertex(0.0, 0.0, 0.0);
+  Vertex v3 = mesh.AddVertex(0.0, -1.0,  0.0);
+  Vertex v4 = mesh.AddVertex(0.0, -1.0,  -1.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -115,10 +115,10 @@ Cube::Cube()
 
   /* right face */
   {
-  Vertex v1 = mesh.AddVertex(20, 10, 0);
-  Vertex v2 = mesh.AddVertex(20, 10, 10);
-  Vertex v3 = mesh.AddVertex(20, 0,  10);
-  Vertex v4 = mesh.AddVertex(20, 0,  0);
+  Vertex v1 = mesh.AddVertex(1.0, 0.0, -1.0);
+  Vertex v2 = mesh.AddVertex(1.0, 0.0, 0.0);
+  Vertex v3 = mesh.AddVertex(1.0, -1.0, 0.0);
+  Vertex v4 = mesh.AddVertex(1.0, -1.0, -1.0);
 
   Edge e1 = mesh.AddEdge(v1, v2);
   Edge e2 = mesh.AddEdge(v2, v3);
@@ -134,7 +134,7 @@ Cube::Cube()
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
   std::cout << "FaceList: " << mesh.NumFaces() << std::endl;
 
-  Subdivide();
+  //Subdivide();
   
 }
 
