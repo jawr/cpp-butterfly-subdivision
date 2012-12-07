@@ -85,7 +85,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Vertex& v)
   {
-    os << "v " << v.X() << " " << v.Y() << " " << v.Z();
+    os << "v " << v.X() << ", " << v.Y() << ", " << v.Z();
     return os;
   }
 };

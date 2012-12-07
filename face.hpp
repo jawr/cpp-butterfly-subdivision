@@ -61,6 +61,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Face& f)
   {
+    os << "f" << std::endl;
     os << f.E1() << std::endl;
     os << f.E2() << std::endl;
     os << f.E3();

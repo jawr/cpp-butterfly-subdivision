@@ -31,7 +31,7 @@ void Display(bool toggle)
   glLoadIdentity();
 
   // fov
-  static GLfloat fov = -10.0f;
+  static GLfloat fov = -5.0f;
   glTranslatef(0.0f, 0.0f, fov);
 
   static shapes::Cube cube;
@@ -53,7 +53,7 @@ void Display(bool toggle)
   if (run)
   {
     angle += 2.0f;
-    if (i++ < 5000 && (i % 500) == 0) 
+    if (i++ < 5000 && (i % 200) == 0) 
     //if (i++ == 50)
       cube.ButterflySubdivide();
   }

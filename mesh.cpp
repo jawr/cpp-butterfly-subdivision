@@ -64,26 +64,9 @@ void WingedEdge::Draw()
   //float g = 0.0;
   //float b = 1.0;
 
-  std::cout << "Draw:" << std::endl;
-  std::cout << "---------------------------" << std::endl;
   for (auto& face: faceList)
-  { 
     for (auto& edge: face.second)
-    {
-      std::cout << edge << std::endl;
       edge.Draw();
-    }
-  }
-  int i = 0;
-  for (auto& edge: edgeListMap)
-  {
-    std::cout << "f " << i++ << " " << i++ << " " << i++ << std::endl;
-    ++i;
-    ++i;
-    ++i;
-  }
-  std::cout << "---------------------------" << std::endl;
-    
 }
 
 WingedEdge WingedEdge::ButterflySubdivide()
