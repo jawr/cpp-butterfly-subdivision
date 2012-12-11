@@ -54,9 +54,11 @@ public:
   void SetButterflySubdivide() { butterfly = true; }
   WingedEdge ButterflySubdivide();
   WingedEdge Subdivide();
-  Vertex SubdivideEdge(const Face& f1, Edge& e, Vertex& b1);
+  Vertex SubdivideEdge(const Face& f1, Edge& e, Vertex b1);
 
-  Face GetAdjacentFace(const Face& f, Edge& e);
+  Face GetAdjacentFace(const Face& face, const Edge& edge);
+  Vertex GetAdjacentVertex(const Face& face, const Edge& edge);
+  Vertex GetAdjacentFaceVertex(const Face& face, const Edge& edge);
 };
 
 /* end */
