@@ -1,16 +1,18 @@
-CXX := clang++
-CXXFLAGS := -std=c++11 -Wall -Wextra -pedantic -g -ggdb
 INCLUDE := -I.
 
 # detect os
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-LIBS := -lGL -lGLU -lSDL
+CXX := g++
+LIBS := -std=c++0x -lGL -lGLU -lSDL
+CXXFLAGS := -Wall -Wextra -pedantic -g -ggdb
 endif
 
 ifeq ($(UNAME), Darwin)
+CXX := clang++
 LIBS := -framework OpenGL -framework GLUT `sdl-config --cflags --libs`
+CXXFLAGS := -std=c++11 -Wall -Wextra -pedantic -g -ggdb
 endif
 
 SOURCE := $(shell find . -type f -name "*.cpp")

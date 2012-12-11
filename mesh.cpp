@@ -60,8 +60,8 @@ Face WingedEdge::AddFace(const Edge& e1, const Edge& e2, const Edge& e3)
 
 void WingedEdge::Draw()
 {
-  for (auto& edge: edgeListMap)
-    edge.first.Draw();
+  for (auto it = edgeListMap.begin(); it != edgeListMap.end(); ++it)
+    it->first.Draw();
 }
 
 WingedEdge WingedEdge::ButterflySubdivide()
@@ -74,12 +74,12 @@ WingedEdge WingedEdge::Subdivide()
 {
   WingedEdge mesh;
   std::set<Edge> edges;
-  for (auto& face: faceList)
+  for (auto face = faceList.begin(); face != faceList.end(); ++face)
   {
     /* massive assumption that there is 3 edges in our face */
-    Edge e1 = face.first.E1();
-    Edge e2 = face.first.E2();
-    Edge e3 = face.first.E3();
+    Edge e1 = face->first.E1();
+    Edge e2 = face->first.E2();
+    Edge e3 = face->first.E3();
 
     /* might need to verify this doesn't pick duplicates */
     Vertex v1 = e1.V1();
@@ -94,9 +94,9 @@ WingedEdge WingedEdge::Subdivide()
       e2 = tmp;
     }
 
-    Vertex v4 = SubdivideEdge(face.first, e1, GetAdjacentVertex(face.first, e1));
-    Vertex v5 = SubdivideEdge(face.first, e2, GetAdjacentVertex(face.first, e2));
-    Vertex v6 = SubdivideEdge(face.first, e3, GetAdjacentVertex(face.first, e3));
+    Vertex v4 = SubdivideEdge(face->first, e1, GetAdjacentVertex(face->first, e1));
+    Vertex v5 = SubdivideEdge(face->first, e2, GetAdjacentVertex(face->first, e2));
+    Vertex v6 = SubdivideEdge(face->first, e3, GetAdjacentVertex(face->first, e3));
 
     {
     e1 = mesh.AddEdge(v1, v4);
@@ -170,26 +170,26 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
   edges.insert(f1.E1());
   edges.insert(f1.E2());
   edges.insert(f1.E3());
-  for (auto& edge: edges)
-    if (edge != e)
+  for (auto edge = edges.begin(); edge != edges.end(); ++edge)
+    if (*edge != e)
     {
-      std::cout << "checking..." << edge << std::endl;
-      Vertex c = GetAdjacentFaceVertex(f1, edge);
+      std::cout << "checking..." << *edge << std::endl;
+      Vertex c = GetAdjacentFaceVertex(f1, *edge);
       std::cout << "c: " << std::endl << c << std::endl; 
-      v = v - (GetAdjacentFaceVertex(f1, edge)/16.0);
+      v = v - (GetAdjacentFaceVertex(f1, *edge)/16.0);
     }
 
   edges.erase(edges.begin(), edges.end());
   edges.insert(f2.E1());
   edges.insert(f2.E2());
   edges.insert(f2.E3());
-  for (auto& edge: edges)
-    if (edge != e)
+  for (auto edge = edges.begin(); edge != edges.end(); ++edge)
+    if (*edge != e)
     {
-      std::cout << "checking..." << edge << std::endl;
-      Vertex c = GetAdjacentFaceVertex(f2, edge);
+      std::cout << "checking..." << *edge << std::endl;
+      Vertex c = GetAdjacentFaceVertex(f2, *edge);
       std::cout << "c: " << std::endl << c << std::endl; 
-      v = v - (GetAdjacentFaceVertex(f2, edge)/16.0);
+      v = v - (GetAdjacentFaceVertex(f2, *edge)/16.0);
     }
 
   } catch (const RuntimeError& e)
