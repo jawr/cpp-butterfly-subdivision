@@ -43,17 +43,6 @@ public:
     glEnd();
   }
 
-  Vertex Midpoint()
-  {
-    GLfloat x = v1.X() + v2.X();
-    GLfloat y = v1.Y() + v2.Y();
-    GLfloat z = v1.Z() + v2.Z();
-    return Vertex(x/2.0, y/2.0, z/2.0);
-  }
-
-  Vertex Smallest() { return (v1 < v2) ? v1 : v2; }
-  Vertex Largest() { return (v1 < v2) ? v2 : v1; }
-
   /* used to use Edge as key in map */
   bool operator<(const Edge& e) const
   {

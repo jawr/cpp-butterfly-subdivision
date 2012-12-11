@@ -20,10 +20,6 @@ public:
   Vertex() {}
   Vertex(GLfloat x, GLfloat y, GLfloat z) : x(x), y(y), z(z) {}
 
-  void X(GLfloat x) { this->x = x; }
-  void Y(GLfloat y) { this->y = y; }
-  void Z(GLfloat z) { this->y = z; }
-
   GLfloat X() const { return x; }
   GLfloat Y() const { return y; }
   GLfloat Z() const { return z; }
@@ -39,6 +35,7 @@ public:
     else if (z > v.Z()) return false;
     return false;
   }
+
   bool operator>(const Vertex& v) const
   {
     return (v < *this);
@@ -52,6 +49,8 @@ public:
   {
     return !(*this == v);
   }
+
+  /* arithmitic operators */
 
   friend Vertex operator/(const Vertex& v, GLfloat f)
   {
