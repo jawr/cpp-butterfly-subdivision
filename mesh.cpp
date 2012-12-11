@@ -127,6 +127,8 @@ WingedEdge WingedEdge::Subdivide()
     }
 
   }
+
+  std::cout << "Subdivide info: " << std::endl;
   std::cout << "VertexList: " << mesh.NumVertices() << std::endl;
   std::cout << "EdgeList: " << mesh.NumEdges() << std::endl;
   std::cout << "FaceList: " << mesh.NumFaces() << std::endl;
@@ -150,20 +152,8 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
   /* get our opposing face's b point */
   Vertex b2 = GetAdjacentVertex(f2, e);
 
-  std::cout << "e : " << std::endl << e << std::endl;
-
-  std::cout << "a1: " << std::endl << e.V1() << std::endl;
-  std::cout << "a2: " << std::endl << e.V2() << std::endl;
-  std::cout << "a: " << std::endl << v << std::endl;
-  
-
-  std::cout << "b1: " << std::endl << b1 << std::endl;
-  std::cout << "b2: " << std::endl << b2 << std::endl;
-
   v = v + (b1/8.0);
   v = v + (b2/8.0);
-
-  std::cout << "b: " << std::endl << v << std::endl;
 
   /* time to get our c points */
   std::set<Edge> edges;
@@ -172,12 +162,7 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
   edges.insert(f1.E3());
   for (auto edge = edges.begin(); edge != edges.end(); ++edge)
     if (*edge != e)
-    {
-      std::cout << "checking..." << *edge << std::endl;
-      Vertex c = GetAdjacentFaceVertex(f1, *edge);
-      std::cout << "c: " << std::endl << c << std::endl; 
       v = v - (GetAdjacentFaceVertex(f1, *edge)/16.0);
-    }
 
   edges.erase(edges.begin(), edges.end());
   edges.insert(f2.E1());
@@ -185,15 +170,11 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
   edges.insert(f2.E3());
   for (auto edge = edges.begin(); edge != edges.end(); ++edge)
     if (*edge != e)
-    {
-      std::cout << "checking..." << *edge << std::endl;
-      Vertex c = GetAdjacentFaceVertex(f2, *edge);
-      std::cout << "c: " << std::endl << c << std::endl; 
       v = v - (GetAdjacentFaceVertex(f2, *edge)/16.0);
-    }
 
   } catch (const RuntimeError& e)
   {
+    /* proceed with the vertex, worst case it is just (a1+a2)/2 */
   }
   
   return v;
@@ -226,6 +207,7 @@ Face WingedEdge::GetAdjacentFace(const Face& face, const Edge& edge)
   for (it = edgeList.faces.begin(); it != edgeList.faces.end(); ++it)
     if (*it != face)
       return *it;
+
   throw RuntimeError("Error getting adjacent face.");
 }
 
