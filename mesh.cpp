@@ -143,6 +143,9 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
   v = e.V1()/2.0;
   v = v + (e.V2()/2.0);
 
+  Vertex v_original;
+  v_original = v;
+
   if (!butterfly) return v;
 
   try
@@ -174,7 +177,8 @@ Vertex WingedEdge::SubdivideEdge(const Face& f1, Edge& e, Vertex b1)
 
   } catch (const RuntimeError& e)
   {
-    /* proceed with the vertex, worst case it is just (a1+a2)/2 */
+    /* proceed with the original vertex, worst case it is just (a1+a2)/2 */
+    return v_original;
   }
   
   return v;
