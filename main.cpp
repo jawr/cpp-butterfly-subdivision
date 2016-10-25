@@ -53,7 +53,7 @@ void Display(bool toggle)
   if (run)
   {
     angle += 2.0f;
-    if (i++ < 1600 && (i % 200) == 0) 
+    if (i++ < 2000 && (i % 200) == 0) 
       cube.ButterflySubdivide();
   }
 
